@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Bot, GrammyError, HttpError, InlineKeyboard } = require("grammy");
+const { Bot, GrammyError, HttpError, InlineKeyboard, InputFile } = require("grammy");
 const fs = require("fs");
 
 const bot = new Bot(process.env.BOT_API_KEY);
@@ -44,26 +44,12 @@ bot.callbackQuery('guide', async (ctx) => {
 });
 
 bot.callbackQuery('getguide', async (ctx) => {
-    try {
-        // Путь к вашему PDF-файлу
-        const pdfPath = "./files/guide.pdf";
+    // Replace with the path to your PDF file
+    const pdfPath = new InputFile("./files/guide.pdf");
 
-        // Проверяем, существует ли файл
-        if (!fs.existsSync(pdfPath)) {
-            return ctx.reply("Файл не найден.");
-        }
+    await ctx.replyWithDocument(pdfPath);
+});
 
-        // Отправляем PDF файл
-        await ctx.replyWithDocument({
-            source: fs.createReadStream(pdfPath),
-            filename: "guide.pdf" // имя файла при отправке
-        });
-
-    } catch (error) {
-        console.error("Ошибка отправки PDF:", error);
-        ctx.reply("Произошла ошибка при отправке файла.");
-    }
-})
 
 bot.catch((err) => {
     const ctx = err.ctx;
