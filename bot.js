@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { Bot, GrammyError, HttpError, InlineKeyboard, InputFile } = require("grammy");
+const { text_start } = require('./text');
 
 const bot = new Bot(process.env.BOT_API_KEY);
 
@@ -11,7 +12,7 @@ const inlineKeyboard = new InlineKeyboard()
     .text('Бесплатный гайд 🎁', 'guide');
 
 bot.command("start", async (ctx) =>
-    await ctx.reply(`Привет! Меня зовут Хрис Вавржина, автор курса по написанию музыки «The Lazy Producer или как за 1,5 месяца написать трек и не потерять вдохновение». \nПодпишись на <a href="https://t.me/xris_vavrzhina">Telegram-канал</a> «The lazy producer. Все о техно.» \nЧтобы заказать у меня консультацию, получить гайд или купить курс, нажмите одну из кнопок ниже:`,
+    await ctx.reply(text_start,
         {
             parse_mode: 'HTML',
             disable_web_page_preview: true,
@@ -38,7 +39,7 @@ const consult = new InlineKeyboard()
 
 bot.callbackQuery('lesson', async (ctx) => {
     await ctx.answerCallbackQuery()
-    await ctx.reply('Консультация', 
+    await ctx.reply('Консультация',
         { reply_markup: consult, }
     );
 });
