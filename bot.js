@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Bot, GrammyError, HttpError, InlineKeyboard, InputFile } = require("grammy");
-const { text_start } = require('./text');
+const texts = require('./texts');
 
 const bot = new Bot(process.env.BOT_API_KEY);
 
@@ -12,7 +12,7 @@ const inlineKeyboard = new InlineKeyboard()
     .text('Бесплатный гайд 🎁', 'guide');
 
 bot.command("start", async (ctx) =>
-    await ctx.reply(text_start,
+    await ctx.reply(texts.text_start,
         {
             parse_mode: 'HTML',
             disable_web_page_preview: true,
