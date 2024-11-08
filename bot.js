@@ -5,11 +5,11 @@ const texts = require('./text');
 const bot = new Bot(process.env.BOT_API_KEY);
 
 const inlineKeyboard = new InlineKeyboard()
-    .text('Консультация 🎓', 'lesson')
+    .text('Консультация ☎️', 'lesson')
     .row()
-    .text('Онлайн курс 🎧', 'course')
+    .text('Онлайн курс 🎓', 'course')
     .row()
-    .text('Бесплатный гайд 🎁', 'guide');
+    .text('Послушаю ваш трек 🎧', 'feedback');
 
 bot.command("start", async (ctx) =>
     await ctx.reply(texts.text_start,
@@ -24,7 +24,7 @@ bot.on("message", (ctx) => ctx.reply("Ой, я пока так не умею �
 
 bot.callbackQuery('course', async (ctx) => {
     await ctx.answerCallbackQuery()
-    await ctx.reply(`Мой авторский курс  <a href="https://www.thelazyproducer.ru/course">«The Lazy Producer или как за 1,5 месяца написать трек и не потерять вдохновение»</a> с заботой разложен на 4 модуля, чтобы процесс обучения приносил удовольствие. Благодаря четко выстроенной системе, через 1,5 месяца вы получаете готовый трек, и логику, которая поможет вам быстро приходить к своей цели, всегда доводить свои треки до конца и кайфовать в процессе.`,
+    await ctx.reply(texts.course,
         {
             parse_mode: 'HTML',
             disable_web_page_preview: true,
@@ -39,8 +39,20 @@ const consult = new InlineKeyboard()
 
 bot.callbackQuery('lesson', async (ctx) => {
     await ctx.answerCallbackQuery()
-    await ctx.reply('Консультация',
+    await ctx.reply(texts.consult,
         { reply_markup: consult, }
+    );
+});
+
+const feedback = new InlineKeyboard()
+    .url('Получить фидбек', 'https://t.me/xrisvavrzhina')
+    .row()
+    .text('< Назад в меню', 'back');
+
+bot.callbackQuery('lesson', async (ctx) => {
+    await ctx.answerCallbackQuery()
+    await ctx.reply(texts.feedback,
+        { reply_markup: feedback, }
     );
 });
 
