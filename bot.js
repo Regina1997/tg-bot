@@ -49,7 +49,7 @@ const feedback = new InlineKeyboard()
     .row()
     .text('< Назад в меню', 'back');
 
-bot.callbackQuery('lesson', async (ctx) => {
+bot.callbackQuery('feedback', async (ctx) => {
     await ctx.answerCallbackQuery()
     await ctx.reply(texts.feedback,
         { reply_markup: feedback, }
