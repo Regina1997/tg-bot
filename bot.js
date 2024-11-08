@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Bot, GrammyError, HttpError, InlineKeyboard, InputFile } = require("grammy");
-const texts = require('./texts');
+const texts = require('./text');
 
 const bot = new Bot(process.env.BOT_API_KEY);
 
