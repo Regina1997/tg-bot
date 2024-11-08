@@ -56,7 +56,6 @@ bot.callbackQuery('feedback', async (ctx) => {
     );
 });
 
-
 const get_guide = new InlineKeyboard()
     .text('Забрать гайд', 'getguide')
     .row()
@@ -76,6 +75,11 @@ bot.callbackQuery('getguide', async (ctx) => {
     const pdfPath = new InputFile("./files/guide.pdf");
 
     await ctx.replyWithDocument(pdfPath);
+});
+
+bot.callbackQuery('back', async (ctx) => {
+    await ctx.answerCallbackQuery()
+    await sendStartMessage(ctx);
 });
 
 
