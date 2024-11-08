@@ -77,6 +77,16 @@ bot.callbackQuery('getguide', async (ctx) => {
     await ctx.replyWithDocument(pdfPath);
 });
 
+function sendStartMessage(ctx) {       
+    return ctx.reply(texts.text_start,
+        {
+            parse_mode: 'HTML',
+            disable_web_page_preview: true,
+            reply_markup: inlineKeyboard,
+        },
+    );
+}
+
 bot.callbackQuery('back', async (ctx) => {
     await ctx.answerCallbackQuery()
     await sendStartMessage(ctx);
