@@ -11,7 +11,7 @@ const inlineKeyboard = new InlineKeyboard()
     .row()
     .text('Послушаю ваш трек 🎧', 'feedback')
     .row()
-    .text('Забрать гайд 🎁', 'get_guide');
+    .text('Забрать гайд 🎁', 'getguide');
 
 bot.command("start", async (ctx) =>
     await ctx.reply(texts.text_start,
