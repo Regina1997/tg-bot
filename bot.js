@@ -74,7 +74,7 @@ bot.callbackQuery('guide', async (ctx) => {
 bot.callbackQuery('getguide', async (ctx) => {
     // Replace with the path to your PDF file
     await ctx.answerCallbackQuery('Гайд объемный! Надо подождать 🤏');
-    const pdfPath = new InputFile("./files/guide.pdf");
+    const pdfPath = new InputFile("./files/3 эффективных техники сведения трека.pdf");
 
     await ctx.replyWithDocument(pdfPath);
 });
