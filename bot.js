@@ -9,7 +9,9 @@ const inlineKeyboard = new InlineKeyboard()
     .row()
     .text('Онлайн курс 🎓', 'course')
     .row()
-    .text('Послушаю ваш трек 🎧', 'feedback');
+    .text('Послушаю ваш трек 🎧', 'feedback')
+    .row()
+    .text('Забрать гайд 🎁', 'get_guide');
 
 bot.command("start", async (ctx) =>
     await ctx.reply(texts.text_start,
