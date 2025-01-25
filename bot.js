@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { Bot, GrammyError, HttpError, InlineKeyboard, InputFile } = require("grammy");
 const texts = require('./text');
-import fs from "fs/promises";
+//import fs from "fs/promises";
 
 const bot = new Bot(process.env.BOT_API_KEY);
 
@@ -121,7 +121,7 @@ bot.command('inline_keyboard', async (ctx) => {
 });
 
 
-const loadPromoCodes = async () => {
+/*const loadPromoCodes = async () => {
     try {
       const data = await fs.readFile("promo_codes.json", "utf-8");
       return JSON.parse(data);
@@ -173,6 +173,6 @@ const loadPromoCodes = async () => {
   
     // Отправляем промокод пользователю
     ctx.reply(`Ваш промокод: ${availableCode}`);
-  });
+  });*/
 
 bot.start();
