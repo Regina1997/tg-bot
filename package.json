@@ -12,6 +12,7 @@
   "dependencies": {
     "@grammyjs/hydrate": "^1.4.1",
     "dotenv": "^16.4.5",
+    "fs.promises": "^0.1.2",
     "grammy": "^1.31.0",
     "nodemon": "^3.1.7"
   }

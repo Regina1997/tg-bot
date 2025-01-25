@@ -1,7 +1,13 @@
 {
-    "promo_codes": {
-      "CODE123": {"is_used": false},
-      "WELCOME10": {"is_used": true}
+  "promo_codes": {
+    "CODE123": {
+      "is_used": true
+    },
+    "WELCOME10": {
+      "is_used": false
     }
+  },
+  "user_promos": {
+    "275525982": "CODE123"
   }
-  
+}

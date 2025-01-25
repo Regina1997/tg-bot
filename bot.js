@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { Bot, GrammyError, HttpError, InlineKeyboard, InputFile } = require("grammy");
 const texts = require('./text');
-//import fs from "fs/promises";
+const fs = require("fs/promises");
 
 const bot = new Bot(process.env.BOT_API_KEY);
 
@@ -23,7 +23,7 @@ bot.command("start", async (ctx) =>
         },
     ));
 
-bot.on("message", (ctx) => ctx.reply("Ой, я пока так не умею 🤓"));
+//bot.on("message", (ctx) => ctx.reply("Ой, я пока так не умею 🤓"));
 
 bot.callbackQuery('course', async (ctx) => {
     await ctx.answerCallbackQuery()
@@ -121,9 +121,9 @@ bot.command('inline_keyboard', async (ctx) => {
 });
 
 
-/*const loadPromoCodes = async () => {
+const loadPromoCodes = async () => {
     try {
-      const data = await fs.readFile("promo_codes.json", "utf-8");
+      const data = await fs.readFile("./files/promo_codes.json", "utf-8");
       return JSON.parse(data);
     } catch (err) {
       console.error("Ошибка загрузки промокодов:", err);
@@ -134,7 +134,7 @@ bot.command('inline_keyboard', async (ctx) => {
   // Сохраняем промокоды в файл
   const savePromoCodes = async (data) => {
     try {
-      await fs.writeFile("promo_codes.json", JSON.stringify(data, null, 2));
+      await fs.writeFile("./files/promo_codes.json", JSON.stringify(data, null, 2));
     } catch (err) {
       console.error("Ошибка сохранения промокодов:", err);
     }
@@ -146,7 +146,8 @@ bot.command('inline_keyboard', async (ctx) => {
   
     // Загружаем текущий список промокодов
     const data = await loadPromoCodes();
-  
+    console.log(data);
+    
     // Проверяем, не получил ли пользователь уже промокод
     if (!data.user_promos) {
       data.user_promos = {};
@@ -173,6 +174,6 @@ bot.command('inline_keyboard', async (ctx) => {
   
     // Отправляем промокод пользователю
     ctx.reply(`Ваш промокод: ${availableCode}`);
-  });*/
+  });
 
 bot.start();
