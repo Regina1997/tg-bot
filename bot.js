@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { Bot, GrammyError, HttpError, InlineKeyboard, InputFile } = require("grammy");
 const texts = require('./text');
+import fs from "fs/promises";
 
 const bot = new Bot(process.env.BOT_API_KEY);
 
@@ -118,5 +119,60 @@ bot.command('inline_keyboard', async (ctx) => {
         reply_markup: inlineKeyboard,
     });
 });
+
+
+const loadPromoCodes = async () => {
+    try {
+      const data = await fs.readFile("promo_codes.json", "utf-8");
+      return JSON.parse(data);
+    } catch (err) {
+      console.error("Ошибка загрузки промокодов:", err);
+      return { promo_codes: {} };
+    }
+  };
+  
+  // Сохраняем промокоды в файл
+  const savePromoCodes = async (data) => {
+    try {
+      await fs.writeFile("promo_codes.json", JSON.stringify(data, null, 2));
+    } catch (err) {
+      console.error("Ошибка сохранения промокодов:", err);
+    }
+  };
+  
+  // Команда для получения промокода
+  bot.command("getpromo", async (ctx) => {
+    const userId = ctx.from.id;
+  
+    // Загружаем текущий список промокодов
+    const data = await loadPromoCodes();
+  
+    // Проверяем, не получил ли пользователь уже промокод
+    if (!data.user_promos) {
+      data.user_promos = {};
+    }
+    if (data.user_promos[userId]) {
+      return ctx.reply(`Вы уже получили промокод: ${data.user_promos[userId]}`);
+    }
+  
+    // Ищем первый доступный промокод
+    const availableCode = Object.keys(data.promo_codes).find(
+      (code) => !data.promo_codes[code].is_used
+    );
+  
+    if (!availableCode) {
+      return ctx.reply("К сожалению, все промокоды уже выданы.");
+    }
+  
+    // Помечаем промокод как использованный
+    data.promo_codes[availableCode].is_used = true;
+    data.user_promos[userId] = availableCode;
+  
+    // Сохраняем изменения
+    await savePromoCodes(data);
+  
+    // Отправляем промокод пользователю
+    ctx.reply(`Ваш промокод: ${availableCode}`);
+  });
 
 bot.start();
